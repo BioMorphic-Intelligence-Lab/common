@@ -39,4 +39,34 @@ namespace common
         return enu;
     }
 
+    Eigen::Matrix3d rot_x(double theta)
+    {
+    double sT = sin(theta), cT = cos(theta);
+    Eigen::Matrix3d rot;
+    rot << 1, 0, 0,
+            0, cT, -sT,
+            0, sT, cT;
+    return rot;
+    }
+
+    Eigen::Matrix3d rot_y(double theta)
+    {
+
+    double sT = sin(theta), cT = cos(theta);
+    Eigen::Matrix3d rot;
+    rot << cT, 0, sT,
+            0, 1, 0,
+            -sT, 0, cT;
+    return rot;
+    }
+    Eigen::Matrix3d rot_z(double theta)
+    {
+    double sT = sin(theta), cT = cos(theta);
+    Eigen::Matrix3d rot;
+    rot << cT, -sT, 0,
+            sT, cT, 0,
+            0, 0, 1;
+    return rot;
+    }
+
 }
