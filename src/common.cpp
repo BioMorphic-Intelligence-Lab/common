@@ -39,6 +39,21 @@ namespace common
         return enu;
     }
 
+    float yaw_from_quaternion(const Eigen::Quaterniond &q)
+    {
+        auto euler = q.toRotationMatrix().eulerAngles(0,1,2);
+        return euler.z();
+    }
+
+    Eigen::Quaterniond quaternion_from_rpy(const double roll, 
+                                           const double pitch,
+                                           const double yaw)
+    {
+        return Eigen::AngleAxis<double>(roll, Eigen::Vector3d::UnitX())
+            * Eigen::AngleAxis<double>(pitch,  Eigen::Vector3d::UnitY()) 
+            * Eigen::AngleAxis<double>(yaw, Eigen::Vector3d::UnitZ());
+    }
+
     Eigen::Matrix3d rot_x(double theta)
     {
     double sT = sin(theta), cT = cos(theta);
