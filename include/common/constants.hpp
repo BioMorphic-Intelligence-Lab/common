@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 namespace common
 {
     constexpr double SEC2USEC  = 1000000.0f;
@@ -5,3 +8,5 @@ namespace common
     constexpr double NSEC2SEC  = 1e-9f;
     constexpr double SEC2NSEC  = 1e+9f;
 }
+
+#endif // CONSTANTS_H

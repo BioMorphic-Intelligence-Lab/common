@@ -1,3 +1,6 @@
+#ifndef COMMON_H
+#define COMMON_H
+
 #include <Eigen/Dense>
 #include "constants.hpp"
 
@@ -16,3 +19,5 @@ namespace common
     Eigen::Matrix3d rot_y(double theta);
     Eigen::Matrix3d rot_z(double theta);
 }
+
+#endif // COMMON_H
