@@ -3,7 +3,8 @@
 
 namespace common
 {
-    Eigen::Quaterniond quaternion_from_euler(const double roll,
+    float yaw_from_quaternion(const Eigen::Quaterniond &q);
+    Eigen::Quaterniond quaternion_from_euler(const double roll, 
                                              const double pitch,
                                              const double yaw);
     Eigen::Quaterniond quaternion_from_euler(const Eigen::Vector3d &euler);
