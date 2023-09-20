@@ -21,6 +21,8 @@ namespace personal
         Eigen::Matrix3d rot_x(double theta);
         Eigen::Matrix3d rot_y(double theta);
         Eigen::Matrix3d rot_z(double theta);
+
+        double normalize_angle(double theta);
     }
 
 }

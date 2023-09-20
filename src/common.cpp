@@ -10,9 +10,9 @@ namespace common
     Eigen::Quaterniond quaternion_from_euler(const Eigen::Vector3d &euler)
     {
         // YPR is ZYX axes
-        Eigen::Quaterniond q(Eigen::AngleAxisd(euler.z(), Eigen::Vector3d::UnitZ()) *
+        Eigen::Quaterniond q(Eigen::AngleAxisd(euler.x(), Eigen::Vector3d::UnitX()) *
                     Eigen::AngleAxisd(euler.y(), Eigen::Vector3d::UnitY()) *
-                    Eigen::AngleAxisd(euler.x(), Eigen::Vector3d::UnitX()));
+                    Eigen::AngleAxisd(euler.y(), Eigen::Vector3d::UnitZ()));
 
         double norm_factor = copysign(1.0, q.w());
         // Normalize to w being always positive
@@ -38,9 +38,16 @@ namespace common
                                            const double pitch,
                                            const double yaw)
     {
-        return Eigen::AngleAxis<double>(roll, Eigen::Vector3d::UnitX())
-            * Eigen::AngleAxis<double>(pitch,  Eigen::Vector3d::UnitY()) 
-            * Eigen::AngleAxis<double>(yaw, Eigen::Vector3d::UnitZ());
+        Eigen::Quaterniond q(Eigen::AngleAxis<double>(roll, Eigen::Vector3d::UnitX())
+                            * Eigen::AngleAxis<double>(pitch,  Eigen::Vector3d::UnitY()) 
+                            * Eigen::AngleAxis<double>(yaw, Eigen::Vector3d::UnitZ()));
+        
+        double norm_factor = copysign(1.0, q.w());
+        // Normalize to w being always positive
+        Eigen::Quaterniond q_norm(q.w() * norm_factor, q.x() * norm_factor,
+                               q.y() * norm_factor, q.z() * norm_factor);
+
+        return q_norm;
     }
 
     Eigen::Vector3d enu_2_ned(const Eigen::Vector3d &enu)
@@ -93,6 +100,13 @@ namespace common
             sT, cT, 0,
             0, 0, 1;
     return rot;
+    }
+
+    double normalize_angle(double theta){
+        theta = fmod(theta + M_PI, 2 * M_PI);
+        if (theta < 0)
+            theta += 2 * M_PI;
+        return theta - M_PI;
     }
 }
 }
