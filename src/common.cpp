@@ -10,14 +10,27 @@ namespace common
     Eigen::Quaterniond quaternion_from_euler(const Eigen::Vector3d &euler)
     {
         // YPR is ZYX axes
-        return Eigen::Quaterniond(Eigen::AngleAxisd(euler.z(), Eigen::Vector3d::UnitZ()) *
+        Eigen::Quaterniond q(Eigen::AngleAxisd(euler.z(), Eigen::Vector3d::UnitZ()) *
                     Eigen::AngleAxisd(euler.y(), Eigen::Vector3d::UnitY()) *
                     Eigen::AngleAxisd(euler.x(), Eigen::Vector3d::UnitX()));
+
+        double norm_factor = copysign(1.0, q.w());
+        // Normalize to w being always positive
+        Eigen::Quaterniond q_norm(q.w() * norm_factor, q.x() * norm_factor,
+                               q.y() * norm_factor, q.z() * norm_factor);
+
+        return q_norm;
     }
 
     float yaw_from_quaternion(const Eigen::Quaterniond &q)
     {
-        auto euler = q.toRotationMatrix().eulerAngles(0,1,2);
+        double norm_factor = copysign(1.0, q.w());
+        // Normalize to w being always positive
+        Eigen::Quaterniond q_norm(q.w() * norm_factor, q.x() * norm_factor,
+                               q.y() * norm_factor, q.z() * norm_factor);
+
+        auto euler = q_norm.toRotationMatrix().eulerAngles(0,1,2);
+
         return euler.z();
     }
 
