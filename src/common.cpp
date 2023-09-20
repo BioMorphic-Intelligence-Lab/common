@@ -29,9 +29,9 @@ namespace common
         Eigen::Quaterniond q_norm(q.w() * norm_factor, q.x() * norm_factor,
                                q.y() * norm_factor, q.z() * norm_factor);
 
-        auto euler = q_norm.toRotationMatrix().eulerAngles(0,1,2);
+        auto euler = q_norm.toRotationMatrix().eulerAngles(2,1,0);
 
-        return euler.z();
+        return euler[0];
     }
 
     Eigen::Quaterniond quaternion_from_euler(const double roll, 
