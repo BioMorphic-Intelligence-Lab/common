@@ -1,5 +1,7 @@
 #include "common.hpp"
 
+namespace personal
+{
 namespace common
 {
     const Eigen::Quaterniond NED_ENU_Q = 
@@ -79,5 +81,5 @@ namespace common
             0, 0, 1;
     return rot;
     }
-
+}
 }
