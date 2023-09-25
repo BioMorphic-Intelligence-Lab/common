@@ -43,7 +43,7 @@ namespace personal
 
             auto euler = q_norm.toRotationMatrix().eulerAngles(2, 1, 0);
 
-            return euler[2];
+            return euler[1];
         }
 
         Eigen::Quaterniond quaternion_from_euler(const double roll,
