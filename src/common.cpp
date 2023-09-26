@@ -33,6 +33,14 @@ namespace personal
 
             return euler[0];
         }
+        /*get yaw that makes y-axis lay in y-z-plane of unit-orientation after applying rot_z(yaw)*q.toRotationMatrix */
+        float yaw_from_quaternion_y_align(const Eigen::Quaterniond &q)
+        {
+            const Eigen::Matrix3d R = q.toRotationMatrix();
+            double yaw = -atan2(R(0, 1), R(1, 1));
+
+            return yaw;
+        }
 
         float roll_from_quaternion(const Eigen::Quaterniond &q)
         {
