@@ -81,12 +81,23 @@ namespace personal
         Eigen::Quaterniond enu_2_ned(const Eigen::Quaterniond &enu)
         {
             Eigen::Quaternion ned = NED_ENU_Q * enu;
-            return ned;
+            double norm_factor = copysign(1.0, ned.w());
+            Eigen::Quaternion ned_norm(ned.w() / norm_factor,
+                                       ned.x() / norm_factor,
+                                       ned.y() / norm_factor,
+                                       ned.z() / norm_factor);
+            return ned_norm;
         }
         Eigen::Quaterniond ned_2_enu(const Eigen::Quaterniond &ned)
         {
             Eigen::Quaternion enu = NED_ENU_Q * ned;
-            return enu;
+
+            double norm_factor = copysign(1.0, enu.w());
+            Eigen::Quaternion enu_norm(enu.w() / norm_factor,
+                                       enu.x() / norm_factor,
+                                       enu.y() / norm_factor,
+                                       enu.z() / norm_factor);
+            return enu_norm;
         }
 
         Eigen::Matrix3d rot_x(double theta)

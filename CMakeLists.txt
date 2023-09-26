@@ -20,6 +20,13 @@ include_directories(include/common
 add_library(common src/common.cpp)
 ament_target_dependencies(common Eigen3)
 
+add_executable(test_common src/common.cpp src/test.cpp)
+ament_target_dependencies(test_common Eigen3)
+target_include_directories(test_common PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/common>
+  $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIR}>
+  $<INSTALL_INTERFACE:include>)
+
 # Build and export library
 ament_export_targets(common HAS_LIBRARY_TARGET)
 ament_export_dependencies(Eigen3)
@@ -34,6 +41,10 @@ install(
   RUNTIME DESTINATION bin
   INCLUDES
   DESTINATION include)
+
+install(TARGETS
+  test_common
+  DESTINATION lib/${PROJECT_NAME})
   
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
