@@ -36,7 +36,10 @@ namespace personal
         /*get yaw that makes y-axis lay in y-z-plane of unit-orientation after applying rot_z(yaw)*q.toRotationMatrix */
         float yaw_from_quaternion_y_align(const Eigen::Quaterniond &q)
         {
-            const Eigen::Matrix3d R = q.toRotationMatrix();
+            double norm_factor = copysign(1.0, q.w());
+            Eigen::Quaterniond q_norm(q.w() * norm_factor, q.x() * norm_factor,
+                                      q.y() * norm_factor, q.z() * norm_factor);
+            const Eigen::Matrix3d R = q_norm.toRotationMatrix();
             double yaw = -atan2(R(0, 1), R(1, 1));
 
             return yaw;
