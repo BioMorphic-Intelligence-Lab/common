@@ -36,10 +36,10 @@ namespace personal
 
         float yaw_from_quaternion(double w, double x, double y, double z)
         {
-            Eigen::Quaterdniond q(w, x, y, z);
+            Eigen::Quaterniond q(w, x, y, z);
             return yaw_from_quaternion(q);
         }
-        
+
         /*get yaw that makes y-axis lay in y-z-plane of unit-orientation after applying rot_z(yaw)*q.toRotationMatrix */
         float yaw_from_quaternion_y_align(const Eigen::Quaterniond &q)
         {
